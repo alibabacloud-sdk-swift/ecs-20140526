@@ -59585,6 +59585,8 @@ public class DescribeInstanceHistoryEventsResponseBody : Tea.TeaModel {
 
                 public var inactiveDisks: DescribeInstanceHistoryEventsResponseBody.InstanceSystemEventSet.InstanceSystemEventType.ExtendedAttribute.InactiveDisks?
 
+                public var initialNotBefore: String?
+
                 public var metricName: String?
 
                 public var metricValue: String?
@@ -59640,6 +59642,9 @@ public class DescribeInstanceHistoryEventsResponseBody : Tea.TeaModel {
                     if self.inactiveDisks != nil {
                         map["InactiveDisks"] = self.inactiveDisks?.toMap()
                     }
+                    if self.initialNotBefore != nil {
+                        map["InitialNotBefore"] = self.initialNotBefore!
+                    }
                     if self.metricName != nil {
                         map["MetricName"] = self.metricName!
                     }
@@ -59694,6 +59699,9 @@ public class DescribeInstanceHistoryEventsResponseBody : Tea.TeaModel {
                         var model = DescribeInstanceHistoryEventsResponseBody.InstanceSystemEventSet.InstanceSystemEventType.ExtendedAttribute.InactiveDisks()
                         model.fromMap(value)
                         self.inactiveDisks = model
+                    }
+                    if let value = dict["InitialNotBefore"] as? String {
+                        self.initialNotBefore = value
                     }
                     if let value = dict["MetricName"] as? String {
                         self.metricName = value
@@ -62343,9 +62351,41 @@ public class DescribeInstanceTopologyRequest : Tea.TeaModel {
 public class DescribeInstanceTopologyResponseBody : Tea.TeaModel {
     public class Topologys : Tea.TeaModel {
         public class Topology : Tea.TeaModel {
+            public class NetworkNodes : Tea.TeaModel {
+                public var networkNodes: [String]?
+
+                public override init() {
+                    super.init()
+                }
+
+                public init(_ dict: [String: Any]) {
+                    super.init()
+                    self.fromMap(dict)
+                }
+
+                public override func validate() throws -> Void {
+                }
+
+                public override func toMap() -> [String : Any] {
+                    var map = super.toMap()
+                    if self.networkNodes != nil {
+                        map["NetworkNodes"] = self.networkNodes!
+                    }
+                    return map
+                }
+
+                public override func fromMap(_ dict: [String: Any?]?) -> Void {
+                    guard let dict else { return }
+                    if let value = dict["NetworkNodes"] as? [String] {
+                        self.networkNodes = value
+                    }
+                }
+            }
             public var hostId: String?
 
             public var instanceId: String?
+
+            public var networkNodes: DescribeInstanceTopologyResponseBody.Topologys.Topology.NetworkNodes?
 
             public override init() {
                 super.init()
@@ -62357,6 +62397,7 @@ public class DescribeInstanceTopologyResponseBody : Tea.TeaModel {
             }
 
             public override func validate() throws -> Void {
+                try self.networkNodes?.validate()
             }
 
             public override func toMap() -> [String : Any] {
@@ -62366,6 +62407,9 @@ public class DescribeInstanceTopologyResponseBody : Tea.TeaModel {
                 }
                 if self.instanceId != nil {
                     map["InstanceId"] = self.instanceId!
+                }
+                if self.networkNodes != nil {
+                    map["NetworkNodes"] = self.networkNodes?.toMap()
                 }
                 return map
             }
@@ -62377,6 +62421,11 @@ public class DescribeInstanceTopologyResponseBody : Tea.TeaModel {
                 }
                 if let value = dict["InstanceId"] as? String {
                     self.instanceId = value
+                }
+                if let value = dict["NetworkNodes"] as? [String: Any?] {
+                    var model = DescribeInstanceTopologyResponseBody.Topologys.Topology.NetworkNodes()
+                    model.fromMap(value)
+                    self.networkNodes = model
                 }
             }
         }
