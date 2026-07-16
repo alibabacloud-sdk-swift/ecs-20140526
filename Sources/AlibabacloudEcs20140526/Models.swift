@@ -56458,6 +56458,8 @@ public class DescribeImagesRequest : Tea.TeaModel {
 
     public var tag: [DescribeImagesRequest.Tag]?
 
+    public var usable: Bool?
+
     public var usage: String?
 
     public override init() {
@@ -56559,6 +56561,9 @@ public class DescribeImagesRequest : Tea.TeaModel {
                 tmp.append(k.toMap())
             }
             map["Tag"] = tmp
+        }
+        if self.usable != nil {
+            map["Usable"] = self.usable!
         }
         if self.usage != nil {
             map["Usage"] = self.usage!
@@ -56665,6 +56670,9 @@ public class DescribeImagesRequest : Tea.TeaModel {
                 }
             }
             self.tag = tmp
+        }
+        if let value = dict["Usable"] as? Bool {
+            self.usable = value
         }
         if let value = dict["Usage"] as? String {
             self.usage = value
@@ -57176,6 +57184,8 @@ public class DescribeImagesResponseBody : Tea.TeaModel {
 
             public var tags: DescribeImagesResponseBody.Images.Image.Tags?
 
+            public var usable: Bool?
+
             public var usage: String?
 
             public override init() {
@@ -57292,6 +57302,9 @@ public class DescribeImagesResponseBody : Tea.TeaModel {
                 if self.tags != nil {
                     map["Tags"] = self.tags?.toMap()
                 }
+                if self.usable != nil {
+                    map["Usable"] = self.usable!
+                }
                 if self.usage != nil {
                     map["Usage"] = self.usage!
                 }
@@ -57403,6 +57416,9 @@ public class DescribeImagesResponseBody : Tea.TeaModel {
                     var model = DescribeImagesResponseBody.Images.Image.Tags()
                     model.fromMap(value)
                     self.tags = model
+                }
+                if let value = dict["Usable"] as? Bool {
+                    self.usable = value
                 }
                 if let value = dict["Usage"] as? String {
                     self.usage = value
